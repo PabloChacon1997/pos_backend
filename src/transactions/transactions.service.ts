@@ -69,7 +69,7 @@ export class TransactionsService {
         await tem.save(transactionContents);
       }
     });
-    return 'Venta almacenda correctamente';
+    return { message: 'Venta almacenda correctamente' };
   }
 
   findAll(transactionDate?: string) {
