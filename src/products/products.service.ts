@@ -38,7 +38,7 @@ export class ProductsService {
         category: true,
       },
       order: {
-        id: 'ASC',
+        id: 'DESC',
       },
       take,
       skip,
@@ -50,10 +50,10 @@ export class ProductsService {
         },
       };
     }
-    const [prodycts, total] =
+    const [products, total] =
       await this.productRepository.findAndCount(options);
     return {
-      prodycts,
+      products,
       total,
     };
   }
@@ -72,7 +72,7 @@ export class ProductsService {
       errors.push(`El producto no fue encontrado con el ID: ${id}`);
       throw new NotFoundException(errors);
     }
-    return product;
+    return { ...product, categoryId: product.category.id };
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
@@ -95,6 +95,6 @@ export class ProductsService {
   async remove(id: number) {
     const product = await this.findOne(id);
     await this.productRepository.remove(product);
-    return 'Producto eliminado correctamente';
+    return { message: 'Producto eliminado correctamente' };
   }
 }
